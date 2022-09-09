@@ -1,0 +1,128 @@
+package introduction;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WindowType;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class amazon {
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+		System.setProperty("webdriver.chrome.driver","C:\\Users\\Aishwary.Jaiswal\\Downloads\\chromedriver_win32 (1)\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		driver.manage().window().maximize();
+
+		driver.get(" https://www.amazon.in/");
+		//JavascriptExecutor js = (JavascriptExecutor)driver;
+		//js.executeScript("window.scrollBy(0,500)");
+		
+		
+		Actions a = new Actions(driver);
+		//this is to do right click on accounts option
+		//a.moveToElement(driver.findElement(By.xpath("//span[@class='nav-line-2 ']"))).contextClick().build().perform();
+		a.moveToElement(driver.findElement(By.id("twotabsearchtextbox"))).click().keyDown(Keys.SHIFT).sendKeys("matchbox").doubleClick().build().perform();
+		
+		driver.findElement(By.id("nav-search-submit-button")).click();
+		
+		//UNABLE TO NAVIGATE BEACUSE IT IS AMAZON ?????
+		 //driver.close();
+		ArrayList<String> windows = new ArrayList<String>(driver.getWindowHandles()); //[parentid,childid,subchildId]
+		driver.switchTo().window(windows.get(1));
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		js.executeScript("window.scrollBy(0,700)");
+		Thread.sleep(3000);
+		//driver.get("https://www.amazon.in/s?k=PANASONIC+VACCUM+CLEANER&ref=nb_sb_noss");
+		driver.findElement(By.xpath("//span[normalize-space()='Matchbox Metal Convoy Trucks Toys, Multicolour, 3 years and older']")).click();
+		ArrayList<String> windowss = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(windowss.get(2));
+		js.executeScript("window.scrollBy(0,700)");
+		driver.findElement(By.xpath("//input[@id='add-to-cart-button']")).click();
+		ArrayList<String> windowsss = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(windowsss.get(3));
+		Thread.sleep(4000);
+		driver.findElement(By.id("twotabsearchtextbox")).clear();
+		a.moveToElement(driver.findElement(By.id("twotabsearchtextbox"))).click().keyDown(Keys.SHIFT).sendKeys("toy plane").build().perform();
+		driver.findElement(By.id("nav-search-submit-button")).click();
+		ArrayList<String> windowssss = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(windowssss.get(4));
+		js.executeScript("window.scrollBy(0,2000)");
+		driver.findElement(By.xpath("//span[contains(text(),'Toyzone Friction Airbus-70153 | Plastic Plane | Fr')]")).click();
+		//driver.findElement(By.cssSelector("//*[text()='Airbus-70153']")).click();
+		
+		//was trying to do with AMAZON'S CHOICE, BUT NOTICED THAT IT CHNAGES ALL THE TIME.
+		ArrayList<String> windowsssss = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(windowsssss.get(5));
+		Thread.sleep(3000);
+		js.executeScript("window.scrollBy(0,200)");
+		driver.findElement(By.xpath("//input[@id='add-to-cart-button']")).click();
+		ArrayList<String> windowssssss = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(windowssssss.get(6));
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//input[@name='proceedToRetailCheckout']")).click();
+		ArrayList<String> windowsssssss = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(windowsssssss.get(7));
+		driver.findElement(By.xpath("//input[@id='ap_email']")).sendKeys("aishwaryjaiswal1103@gmail.com");
+		driver.findElement(By.xpath("//input[@id='continue']")).click();
+		
+		System.out.println(driver.findElement(By.xpath("//h4[@class='a-alert-heading']")).getText().trim());
+		driver.navigate().back();
+		//Thread.sleep(2000);
+		//ArrayList<String> windowssssss = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(windowssssss.get(6));
+		a.moveToElement(driver.findElement(By.xpath("//span[@class='nav-line-2 ']"))).contextClick().build().perform();
+		driver.findElement(By.xpath("//span[normalize-space()='Create a Wish List']")).click();
+		ArrayList<String> window10 = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(window10.get(6));
+		Thread.sleep(2000);
+		js.executeScript("window.scrollBy(0,2000)");
+		//added
+		
+		
+		//System.out.println(driver.findElements(By.cssSelector("a.nav_a")).size());
+				System.out.println(driver.findElements(By.tagName("a")).size());
+				WebElement footerdriver = driver.findElement(By.id("navFooter"));// Limiting webdriver scope
+				System.out.println(footerdriver.findElements(By.tagName("a")).size());
+				
+				WebElement coloumndriver = footerdriver.findElement(By.cssSelector("div.navFooterLinkCol.navAccessibility"));
+				int Columns;
+				Columns = coloumndriver.findElements(By.tagName("a")).size();
+				System.out.println(Columns);
+				// Now click on each link in the coloumn and check if the pages are opening-
+				
+				for (int i = 0; i < Columns; i++) {
+
+					String clickonlinkTab = Keys.chord(Keys.CONTROL,Keys.ENTER);
+
+					coloumndriver.findElements(By.tagName("a")).get(i).sendKeys(clickonlinkTab);
+					Thread.sleep(5000L);
+					
+					}
+				
+				//can also check MORETABS way
+				ArrayList<String> window9 = new ArrayList<String>(driver.getWindowHandles());
+				Iterator<String> it = window9.iterator();
+
+				for (int i = 13; i >7 ; i--) {
+					driver.switchTo().window(window9.get(i));
+					System.out.println(driver.getTitle());
+					//sometimes the third link was not opening--so how to skip it /
+					Thread.sleep(1000);
+					it.next();
+				}
+				Thread.sleep(2000);
+				driver.quit();
+
+	}
+
+}
